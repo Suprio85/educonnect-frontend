@@ -16,6 +16,7 @@ import ProfessorsPage from "./pages/Professors";
 import ProfessorProfilePage from "./pages/Professor";
 import Footer from "./components/ui/footer";
 import ChatbotProvider from "./components/chatbot/chatbot-provider";
+import ScholarshipDetailPage from "./pages/Scholarship";
 
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/scholarships" element={<Scholarships />} />
+          <Route path="/scholarships/:id" element={<ScholarshipDetailPage />} />
           <Route path="/housing" element={<Housing />} />
           <Route path="/forum" element={<Forum />} />
           <Route path="/ai-assistant" element={<AIAssistant />} />

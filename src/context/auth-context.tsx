@@ -1,22 +1,20 @@
-"use client"
 
-import { createContext, useContext, useState, useEffect } from "react"
+import { createContext, useState, useEffect, ReactNode } from "react"
+import { User, AuthResponse, AuthContextType } from "@/types/auth"
 
-const AuthContext = createContext({})
-
-export const useAuth = () => {
-  const context = useContext(AuthContext)
-  if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider")
-  }
-  return context
+interface AuthProviderProps {
+  children: ReactNode
 }
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
 
-  // Simulate checking for existing session on mount
+export const AuthContext = createContext<AuthContextType | undefined>(undefined)
+
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [googleLoading, setGoogleLoading] = useState(false)
+
+  
   useEffect(() => {
     const checkAuth = () => {
       const savedUser = localStorage.getItem("educonnect_user")
@@ -28,14 +26,14 @@ export const AuthProvider = ({ children }) => {
     checkAuth()
   }, [])
 
-  const login = async (email, password) => {
+  const login = async (email: string, password: string): Promise<AuthResponse> => {
     setLoading(true)
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
       // Mock user data - in real app this would come from API
-      const userData = {
+      const userData: User = {
         id: "1",
         email,
         name: email.split("@")[0],
@@ -54,15 +52,47 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const register = async (userData) => {
+  const loginWithGoogle = async (): Promise<AuthResponse> => {
+    setGoogleLoading(true)
+    try {
+      // Simulate Google OAuth flow
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+
+      // Mock Google user data - in real app this would come from Google OAuth
+      const googleUserData: User = {
+        id: "google_" + Date.now(),
+        email: "user@gmail.com",
+        name: "Google User",
+        userType: "student",
+        avatar: "https://lh3.googleusercontent.com/a/default-user=s96-c",
+        createdAt: new Date().toISOString(),
+        provider: "google",
+      }
+
+      setUser(googleUserData)
+      localStorage.setItem("educonnect_user", JSON.stringify(googleUserData))
+      return { success: true }
+    } catch (error) {
+      return { success: false, error: "Google sign-in failed" }
+    } finally {
+      setGoogleLoading(false)
+    }
+  }
+
+  const register = async (userData: Partial<User>): Promise<AuthResponse> => {
     setLoading(true)
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
-      const newUser = {
+      const newUser: User = {
         id: Date.now().toString(),
-        ...userData,
+        email: userData.email || "",
+        name: userData.name || "",
+        firstName: userData.firstName || "",
+        lastName: userData.lastName || "",
+        password: userData.password || "",
+        userType: userData.userType || "student",
         avatar: null,
         createdAt: new Date().toISOString(),
       }
@@ -77,16 +107,18 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const logout = () => {
+  const logout = (): void => {
     setUser(null)
     localStorage.removeItem("educonnect_user")
   }
 
-  const value = {
+  const value: AuthContextType = {
     user,
     loading,
+    googleLoading,
     login,
     register,
+    loginWithGoogle,
     logout,
     isAuthenticated: !!user,
   }

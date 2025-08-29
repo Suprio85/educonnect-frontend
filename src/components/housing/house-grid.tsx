@@ -219,26 +219,23 @@ export default function HousingGrid({ searchQuery, filters, viewMode }) {
         <div className="flex items-center space-x-2">
           <span className="text-sm text-muted-foreground">Sort by:</span>
           <Button
-            variant={sortBy === "price" ? "default" : "ghost"}
+            variant={sortBy === "price" ? "default" : "outline"}
             size="sm"
             onClick={() => setSortBy("price")}
-            className={sortBy === "price" ? "bg-accent" : ""}
           >
             Price
           </Button>
           <Button
-            variant={sortBy === "distance" ? "default" : "ghost"}
+            variant={sortBy === "distance" ? "default" : "outline"}
             size="sm"
             onClick={() => setSortBy("distance")}
-            className={sortBy === "distance" ? "bg-accent" : ""}
           >
             Distance
           </Button>
           <Button
-            variant={sortBy === "rating" ? "default" : "ghost"}
+            variant={sortBy === "rating" ? "default" : "outline"}
             size="sm"
             onClick={() => setSortBy("rating")}
-            className={sortBy === "rating" ? "bg-accent" : ""}
           >
             Rating
           </Button>
@@ -281,7 +278,7 @@ export default function HousingGrid({ searchQuery, filters, viewMode }) {
                         <span className="font-medium">{listing.rating}</span>
                         <span className="text-sm text-muted-foreground">({listing.reviews})</span>
                       </div>
-                      <Badge variant={listing.available ? "default" : "secondary"}>
+                      <Badge variant={listing.available ? "secondary" : "destructive"}>
                         {listing.available ? "Available" : "Occupied"}
                       </Badge>
                     </div>
@@ -294,8 +291,8 @@ export default function HousingGrid({ searchQuery, filters, viewMode }) {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center space-x-4 text-sm">
                       <span className="flex items-center font-bold text-2xl text-accent">
-                        <DollarSign className="h-5 w-5 mr-1" />
-                        {listing.price}
+                        <DollarSign className="h-5 w-5 mr-1 text-slate-900" />
+                        <p className="text-gray-700">{listing.price}</p>
                         <span className="text-sm font-normal text-muted-foreground ml-1">/month</span>
                       </span>
                       <Badge variant="outline">{listing.roomType}</Badge>
@@ -333,7 +330,7 @@ export default function HousingGrid({ searchQuery, filters, viewMode }) {
                       <Button variant="outline" size="sm" className="bg-transparent">
                         View Details
                       </Button>
-                      <Button size="sm" className="bg-accent hover:bg-accent/90" disabled={!listing.available}>
+                      <Button size="sm"  disabled={!listing.available}>
                         {listing.available ? "Contact Owner" : "Not Available"}
                       </Button>
                     </div>

@@ -114,7 +114,7 @@ export default function ProfessorProfilePage() {
                     </div>
                   </div>
                   <div className="flex items-center space-x-4 mb-4">
-                    <Button className="bg-accent hover:bg-accent/90">
+                    <Button variant="outline" className="bg-transparent">
                       <Mail className="mr-2 h-4 w-4" />
                       Contact Professor
                     </Button>
@@ -139,7 +139,7 @@ export default function ProfessorProfilePage() {
                 <h4 className="font-semibold mb-2">Research Specializations</h4>
                 <div className="flex flex-wrap gap-2">
                   {professor.specializations.map((spec, index) => (
-                    <Badge key={index} variant="secondary">
+                    <Badge key={index} >
                       {spec}
                     </Badge>
                   ))}
@@ -167,7 +167,7 @@ export default function ProfessorProfilePage() {
                         <Calendar className="h-4 w-4 mr-1" />
                         Deadline: {position.deadline}
                       </span>
-                      <Button size="sm" className="bg-accent hover:bg-accent/90">
+                      <Button size="sm" variant="secondary">
                         Apply Now
                       </Button>
                     </div>

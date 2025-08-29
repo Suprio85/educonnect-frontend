@@ -17,21 +17,25 @@ import ProfessorProfilePage from "./pages/Professor";
 import Footer from "./components/ui/footer";
 import ChatbotProvider from "./components/chatbot/chatbot-provider";
 import ScholarshipDetailPage from "./pages/Scholarship";
+import DashboardPage from "./pages/dashboard";
+import { AuthProvider } from "./context/auth-context";
 
 
 const queryClient = new QueryClient();
 
 const App = () => (
+
   <QueryClientProvider client={queryClient}>
     <ChatbotProvider />
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
-        <Navigation />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
+      <AuthProvider>
+        <BrowserRouter>
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/scholarships" element={<Scholarships />} />
           <Route path="/scholarships/:id" element={<ScholarshipDetailPage />} />
@@ -40,10 +44,12 @@ const App = () => (
           <Route path="/ai-assistant" element={<AIAssistant />} />
           <Route path="/professors" element={<ProfessorsPage />} />
           <Route path = "/professors/:id" element={<ProfessorProfilePage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </BrowserRouter>
+    </AuthProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

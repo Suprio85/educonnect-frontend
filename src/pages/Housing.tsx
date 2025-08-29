@@ -2,8 +2,8 @@
 
 import { useState } from "react"
 import Navigation from "@/components/Navigation"
-import HousingFilters from "@/components/ui/house-filter"
-import HousingGrid from "@/components/ui/house-grid"
+import HousingFilters from "@/components/housing/house-filter"
+import HousingGrid from "@/components/housing/house-grid"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, SlidersHorizontal, Map } from "lucide-react"

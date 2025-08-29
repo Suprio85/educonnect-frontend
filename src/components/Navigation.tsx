@@ -4,6 +4,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Input } from "@/components/ui/input"
 import { Search, Menu, X, GraduationCap, Users, Home, MessageSquare, Bot } from "lucide-react"
 import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth"
+import UserMenu from "@/components/auth/user-menu"
 
 const handleOpenChatbot = () => {
     window.dispatchEvent(new CustomEvent("openChatbot"))
@@ -12,6 +14,8 @@ const handleOpenChatbot = () => {
 const Navigation = () => {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const [authMode, setAuthMode] = useState("login");
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b">
@@ -92,16 +96,22 @@ const Navigation = () => {
               <span>SmartEduBot</span>
             </Button>
           </div>
-          <div className="flex items-center space-x-4">
-            <Button variant="outline" asChild>
-              <Link to="/login">Login</Link>
-            </Button>
-            <Button asChild>
-              <Link to="/signup">Sign Up</Link>
-            </Button>
+          <div className="hidden md:flex items-center space-x-4">
+            {isAuthenticated ? (
+              <UserMenu />
+            ) : (
+              <>
+                <Button variant="outline" asChild>
+                  <Link to="/login">Login</Link>
+                </Button>
+                <Button asChild>
+                  <Link to="/signup">Sign Up</Link>
+                </Button>
+              </>
+            )}
           </div>
         </div>
-        <div className="md:hidden">
+        <div className="md:hidden absolute right-4 top-4">
           <Button
             variant="ghost"
             size="sm"
@@ -118,28 +128,38 @@ const Navigation = () => {
       {isMenuOpen && (
             <div className="md:hidden py-4 border-t border-border">
               <div className="flex flex-col space-y-4">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input placeholder="Search opportunities..." className="pl-10" />
-                </div>
                 <Button variant="ghost" className="justify-start">
                   For Students
                 </Button>
                 <Button variant="ghost" className="justify-start">
                   For Institutions
                 </Button>
-                <Button variant="ghost" className="justify-start" asChild>
+                <Button variant="ghost" className="justify-start" asChild onClick={() => setIsMenuOpen(false)}>
                   <Link to="/professors">Find Professors</Link>
                 </Button>
-                <Button variant="ghost" className="justify-start" asChild>
+                <Button variant="ghost" className="justify-start" asChild onClick={() => setIsMenuOpen(false)}>
                   <Link to="/housing">Housing</Link>
                 </Button>
-                <Button variant="ghost" className="justify-start" asChild>
+                <Button variant="ghost" className="justify-start" asChild onClick={() => setIsMenuOpen(false)}>
                   <Link to="/forum">Forum</Link>
                 </Button>
                 <Button variant="ghost" className="justify-start" onClick={handleOpenChatbot}>
                   SmartEduBot
                 </Button>
+                {isAuthenticated ? (
+                  <div className="pt-4 border-t border-border">
+                    <UserMenu />
+                  </div>
+                ) : (
+                  <div className="flex space-x-2 pt-4">
+                    <Button variant="outline" className="flex-1 bg-transparent" onClick={() => setIsMenuOpen(false)}>
+                      <Link to="/login">Sign In</Link>
+                    </Button>
+                    <Button className="flex-1 bg-accent " onClick={() => setIsMenuOpen(false)}>
+                      <Link to="/signup">Sign Up</Link>
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           )}

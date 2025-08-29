@@ -189,7 +189,7 @@ export default function ProfessorsPage() {
                         View Profile
                       </Button>
                       <Link to={`/professors/${professor.id}`}>
-                        <Button size="sm" className="bg-accent hover:bg-accent/90">
+                        <Button size="sm" >
                           Contact
                         </Button>
                       </Link>

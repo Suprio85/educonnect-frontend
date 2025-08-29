@@ -17,7 +17,7 @@ import ProfessorProfilePage from "./pages/Professor";
 import Footer from "./components/ui/footer";
 import ChatbotProvider from "./components/chatbot/chatbot-provider";
 import ScholarshipDetailPage from "./pages/Scholarship";
-import DashboardPage from "./pages/dashboard";
+import DashboardPage from "./pages/Dashboard";
 import { AuthProvider } from "./context/auth-context";
 
 

@@ -156,15 +156,18 @@ export default function SmartEduBot({ isOpen, onClose, onMinimize, isMinimized }
 
   if (!isOpen) return null
 
-  return (
+  return  (
     <div
-      className={`fixed bottom-4 right-4 z-50 transition-all duration-300 ${
-        isMinimized ? "w-80 h-16" : "w-96 h-[600px]"
-      }`}
+      className={`
+        fixed z-50 transition-all duration-300
+        ${isMinimized ? "h-16" : "h-full sm:h-[600px]"}
+        ${isMinimized ? "w-full sm:w-80" : "w-full sm:w-96"}
+        ${isMinimized ? "bottom-0 right-0" : "inset-0 sm:bottom-4 sm:right-4 sm:inset-auto"}
+      `}
     >
-      <Card className="h-full shadow-2xl border-2 border-indigo-200">
+      <Card className="h-full shadow-2xl border-2 border-indigo-200 ">
         {/* Header */}
-        <CardHeader className="pb-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-t-lg">
+        <CardHeader className="pb-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-t-lg ">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
@@ -176,12 +179,7 @@ export default function SmartEduBot({ isOpen, onClose, onMinimize, isMinimized }
               </div>
             </div>
             <div className="flex items-center gap-1">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onMinimize}
-                className="text-white hover:bg-white/20 w-8 h-8 p-0"
-              >
+              <Button variant="ghost" size="sm" onClick={onMinimize} className="text-white hover:bg-white/20 w-8 h-8 p-0">
                 {isMinimized ? <Maximize2 className="w-4 h-4" /> : <Minimize2 className="w-4 h-4" />}
               </Button>
               <Button variant="ghost" size="sm" onClick={onClose} className="text-white hover:bg-white/20 w-8 h-8 p-0">
@@ -218,13 +216,11 @@ export default function SmartEduBot({ isOpen, onClose, onMinimize, isMinimized }
             )}
 
             {/* Messages */}
-            <ScrollArea className="flex-1 p-4 max-h-[400px]">
+            <ScrollArea className="flex-1 p-4 max-h-full sm:max-h-[400px]">
               <div className="space-y-4 pb-4">
                 {messages.map((message) => (
                   <div key={message.id} className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}>
-                    <div
-                      className={`flex gap-2 max-w-[80%] ${message.type === "user" ? "flex-row-reverse" : "flex-row"}`}
-                    >
+                    <div className={`flex gap-2 max-w-[80%] ${message.type === "user" ? "flex-row-reverse" : "flex-row"}`}>
                       <Avatar className="w-8 h-8 flex-shrink-0">
                         {message.type === "bot" ? (
                           <div className="w-full h-full bg-indigo-600 flex items-center justify-center">
@@ -236,11 +232,7 @@ export default function SmartEduBot({ isOpen, onClose, onMinimize, isMinimized }
                           </div>
                         )}
                       </Avatar>
-                      <div
-                        className={`rounded-lg p-3 ${
-                          message.type === "user" ? "bg-indigo-600 text-white" : "bg-gray-100 text-gray-900"
-                        }`}
-                      >
+                      <div className={`rounded-lg p-3 ${message.type === "user" ? "bg-indigo-600 text-white" : "bg-gray-100 text-gray-900"}`}>
                         <p className="text-sm whitespace-pre-line">{message.content}</p>
                       </div>
                     </div>
@@ -258,14 +250,8 @@ export default function SmartEduBot({ isOpen, onClose, onMinimize, isMinimized }
                       <div className="bg-gray-100 rounded-lg p-3">
                         <div className="flex items-center gap-1">
                           <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                          <div
-                            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                            style={{ animationDelay: "0.1s" }}
-                          ></div>
-                          <div
-                            className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
-                            style={{ animationDelay: "0.2s" }}
-                          ></div>
+                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+                          <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
                         </div>
                       </div>
                     </div>
@@ -285,11 +271,7 @@ export default function SmartEduBot({ isOpen, onClose, onMinimize, isMinimized }
                   onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
                   className="flex-1"
                 />
-                <Button
-                  onClick={() => handleSendMessage()}
-                  disabled={!inputMessage.trim() || isTyping}
-                  className="bg-indigo-600 hover:bg-indigo-700"
-                >
+                <Button onClick={() => handleSendMessage()} disabled={!inputMessage.trim() || isTyping} className="bg-indigo-600 hover:bg-indigo-700">
                   <Send className="w-4 h-4" />
                 </Button>
               </div>

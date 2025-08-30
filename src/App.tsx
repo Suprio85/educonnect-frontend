@@ -19,6 +19,7 @@ import ChatbotProvider from "./components/chatbot/chatbot-provider";
 import ScholarshipDetailPage from "./pages/Scholarship";
 import DashboardPage from "./pages/Dashboard";
 import { AuthProvider } from "./context/auth-context";
+import CreateThreadModal from "./components/forum/create-thread-modal";
 
 
 const queryClient = new QueryClient();

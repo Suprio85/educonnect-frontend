@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Search, MessageCircle, ThumbsUp, Clock, Plus } from "lucide-react";
+import CreateThreadModal from "@/components/forum/create-thread-modal";
 
 const Forum = () => {
   const forumPosts = [
@@ -60,10 +61,12 @@ const Forum = () => {
               Connect with fellow students, share experiences, and get answers
             </p>
           </div>
-          <Button className="mt-4 md:mt-0">
-            <Plus className="h-4 w-4 mr-2" />
-            Ask Question
-          </Button>
+          <CreateThreadModal>
+              <Button className="bg-indigo-600 hover:bg-indigo-700">
+                <Plus className="w-4 h-4 mr-2" />
+                New Thread
+              </Button>
+            </CreateThreadModal>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8">

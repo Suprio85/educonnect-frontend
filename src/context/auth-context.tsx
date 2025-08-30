@@ -28,6 +28,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const login = async (email: string, password: string): Promise<AuthResponse> => {
     setLoading(true)
+    console.log(email, password)
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000))

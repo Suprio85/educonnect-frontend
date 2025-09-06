@@ -6,8 +6,11 @@ import { Badge } from "@/components/ui/badge"
 import { Users, BookOpen, Plus, Calendar, ArrowRight, FlaskConical, GraduationCap, Mail } from "lucide-react"
 import { useState } from "react"
 import ProfessorProfileForm from "@/components/form/professor-form"
+import { useToast } from "@/hooks/use-toast"
 
 export default function ProfessorDashboard({ user }) {
+
+  const { toast } = useToast()
   // Mock data - in real app this would come from API
   const stats = {
     activePositions: 5,
@@ -118,6 +121,12 @@ export default function ProfessorDashboard({ user }) {
   const handleProfileUpdate = (profileData) => {
     console.log("Profile updated:", profileData)
     // In real app, this would call API to update profile
+    // simulate success response
+    toast({
+      title: "Profile Updated",
+      description: "Your profile has been successfully updated.",
+      duration: 4000,
+    })
     setShowProfileForm(false)
   }
 

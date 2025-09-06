@@ -1,25 +1,32 @@
-import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navigation from "./components/Navigation";
+import ChatbotProvider from "./components/chatbot/chatbot-provider";
+import Footer from "./components/ui/footer";
+import { AuthProvider } from "./context/auth-context";
+import AIAssistant from "./pages/AIAssistant";
+import DashboardPage from "./pages/Dashboard";
+import Forum from "./pages/Forum";
+import Housing from "./pages/Housing";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Scholarships from "./pages/Scholarships";
-import Housing from "./pages/Housing";
-import Forum from "./pages/Forum";
-import AIAssistant from "./pages/AIAssistant";
 import NotFound from "./pages/NotFound";
-import ProfessorsPage from "./pages/Professors";
 import ProfessorProfilePage from "./pages/Professor";
-import Footer from "./components/ui/footer";
-import ChatbotProvider from "./components/chatbot/chatbot-provider";
+import ProfessorsPage from "./pages/Professors";
 import ScholarshipDetailPage from "./pages/Scholarship";
-import DashboardPage from "./pages/Dashboard";
-import { AuthProvider } from "./context/auth-context";
-import CreateThreadModal from "./components/forum/create-thread-modal";
+import Scholarships from "./pages/Scholarships";
+import Signup from "./pages/Signup";
+import UniversitiesManagement from "./pages/UniversityManagement";
+import Analytics from "./pages/admin/Analytics";
+import ForumModeration from "./pages/admin/ForumModeration";
+import HousingManagement from "./pages/admin/HousingManagement";
+import ProfessorManagement from "./pages/admin/ProfessorManagement";
+import AdminUniversityManagement from "./pages/admin/UniversityManagement";
+import UserManagement from "./pages/admin/UserManagement";
+;
 
 
 const queryClient = new QueryClient();
@@ -46,6 +53,13 @@ const App = () => (
           <Route path="/professors" element={<ProfessorsPage />} />
           <Route path = "/professors/:id" element={<ProfessorProfilePage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/university-management" element={<UniversitiesManagement />} />
+          <Route path="/admin/university-management" element={<AdminUniversityManagement />} />
+          <Route path="/admin/professor-management" element={<ProfessorManagement />} />
+          <Route path="/admin/housing-management" element={<HousingManagement />} />
+          <Route path="/admin/user-management" element={<UserManagement />} />
+          <Route path="/admin/forum-moderation" element={<ForumModeration />} />
+          <Route path="/admin/analytics" element={<Analytics />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

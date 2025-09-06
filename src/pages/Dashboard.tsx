@@ -1,9 +1,10 @@
-import { useAuth } from "@/hooks/useAuth"
-import { useNavigate } from "react-router-dom"
-import { useEffect } from "react"
-import StudentDashboard from "@/components/dashboard/student-dashboard"
+import AdminDashboard from "@/components/dashboard/admin-dashboard"
 import ProfessorDashboard from "@/components/dashboard/professor-dashboard"
+import StudentDashboard from "@/components/dashboard/student-dashboard"
 import Navigation from "@/components/Navigation"
+import { useAuth } from "@/hooks/useAuth"
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function DashboardPage() {
   const { user, isAuthenticated, loading } = useAuth()
@@ -36,8 +37,10 @@ export default function DashboardPage() {
         return <StudentDashboard user={user} />
       case "professor":
         return <ProfessorDashboard user={user} />
+      case "admin":
+        return <AdminDashboard user={user} />
       default:
-        return <StudentDashboard user={user} />
+        return <AdminDashboard user={user} />
     }
   }
 

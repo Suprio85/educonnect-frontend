@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { ScrollArea, ScrollBar } from "../ui/scroll-area"
 import { Badge } from "@/components/ui/badge"
 import { X } from "lucide-react"
 import ReactQuill from "react-quill"
@@ -21,7 +22,7 @@ const categories = [
 export default function CreateThreadModal({ children }) {
   const [isOpen, setIsOpen] = useState(false)
   const [title, setTitle] = useState("")
-  const [content, setContent] = useState("")   // Quill content (HTML string)
+  const [content, setContent] = useState("")  
   const [category, setCategory] = useState("")
   const [tags, setTags] = useState([])
   const [newTag, setNewTag] = useState("")
@@ -125,13 +126,14 @@ export default function CreateThreadModal({ children }) {
           {/* Quill Content */}
           <div className="space-y-2">
             <Label>Content</Label>
+             <div className="bg-white rounded-lg max-h-64 overflow-y-auto">
             <ReactQuill
               theme="snow"
               value={content}
               onChange={setContent}
               placeholder="Write your discussion here..."
-              className="bg-white rounded-lg"
             />
+            </div>
           </div>
 
           {/* Actions */}

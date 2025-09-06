@@ -1,5 +1,3 @@
-"use client"
-
 import UniversityForm from "@/components/form/university-form"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"

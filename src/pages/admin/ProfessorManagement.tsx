@@ -1,5 +1,3 @@
-"use client"
-
 import ProfessorProfileForm from "@/components/form/professor-form"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"

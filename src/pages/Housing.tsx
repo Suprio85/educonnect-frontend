@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import Navigation from "@/components/Navigation"
 import HousingFilters from "@/components/housing/house-filter"

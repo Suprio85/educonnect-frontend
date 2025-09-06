@@ -1,7 +1,11 @@
+"use client"
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Users, BookOpen, Plus, Calendar, ArrowRight, FlaskConical, GraduationCap, Mail } from "lucide-react"
+import { useState } from "react"
+import ProfessorProfileForm from "@/components/form/professor-form"
 
 export default function ProfessorDashboard({ user }) {
   // Mock data - in real app this would come from API
@@ -90,6 +94,8 @@ export default function ProfessorDashboard({ user }) {
     },
   ]
 
+  const [showProfileForm, setShowProfileForm] = useState(false)
+
   const getStatusColor = (status) => {
     switch (status) {
       case "active":
@@ -107,6 +113,18 @@ export default function ProfessorDashboard({ user }) {
       default:
         return "bg-gray-100 text-gray-800"
     }
+  }
+
+  const handleProfileUpdate = (profileData) => {
+    console.log("Profile updated:", profileData)
+    // In real app, this would call API to update profile
+    setShowProfileForm(false)
+  }
+
+  if (showProfileForm) {
+    return (
+      <ProfessorProfileForm professor={user} onSave={handleProfileUpdate} onCancel={() => setShowProfileForm(false)} />
+    )
   }
 
   return (
@@ -264,7 +282,7 @@ export default function ProfessorDashboard({ user }) {
                   <div key={app.id} className="p-3 border border-border rounded-lg">
                     <div className="flex items-start justify-between mb-2">
                       <h4 className="font-semibold text-sm">{app.studentName}</h4>
-                      <Badge className={getStatusColor(app.status)} >
+                      <Badge className={getStatusColor(app.status)}>
                         {app.status.replace("_", " ")}
                       </Badge>
                     </div>
@@ -297,9 +315,13 @@ export default function ProfessorDashboard({ user }) {
             <Mail className="h-6 w-6" />
             <span>Message Students</span>
           </Button>
-          <Button variant="outline" className="h-20 flex-col space-y-2 bg-transparent">
+          <Button
+            variant="outline"
+            className="h-20 flex-col space-y-2 bg-transparent"
+            onClick={() => setShowProfileForm(true)}
+          >
             <BookOpen className="h-6 w-6" />
-            <span>Research Profile</span>
+            <span>Update Profile</span>
           </Button>
         </div>
       </div>

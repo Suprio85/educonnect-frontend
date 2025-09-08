@@ -1,3 +1,4 @@
+import HousingForm from "@/components/form/housing-form"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -17,7 +18,8 @@ export default function HousingManagement() {
       title: "Modern Studio Near Harvard",
       type: "studio",
       price: 2500,
-      location: "Cambridge, MA",
+      city: "Cambridge",
+      state: "MA",
       address: "123 Harvard Street, Cambridge, MA 02138",
       bedrooms: 0,
       bathrooms: 1,
@@ -25,9 +27,9 @@ export default function HousingManagement() {
       description: "Beautiful modern studio apartment just 5 minutes walk from Harvard University.",
       amenities: ["WiFi", "Laundry", "Parking", "AC", "Furnished"],
       images: [],
-      landlord: "John Doe",
-      contact: "john.doe@email.com",
-      phone: "+1 (617) 555-0123",
+      landlordName: "John Doe",
+      landlordEmail: "john.doe@email.com",
+      landlordPhone: "+1 (617) 555-0123",
       status: "available",
       university: "Harvard University",
       datePosted: "2024-01-15",
@@ -37,7 +39,8 @@ export default function HousingManagement() {
       title: "Shared Apartment - MIT Area",
       type: "shared",
       price: 1200,
-      location: "Cambridge, MA",
+      city: "Cambridge",
+      state: "MA",
       address: "456 MIT Avenue, Cambridge, MA 02139",
       bedrooms: 1,
       bathrooms: 1,
@@ -45,9 +48,9 @@ export default function HousingManagement() {
       description: "Share a 3-bedroom apartment with other graduate students near MIT campus.",
       amenities: ["WiFi", "Kitchen", "Study Room", "Bike Storage"],
       images: [],
-      landlord: "Jane Smith",
-      contact: "jane.smith@email.com",
-      phone: "+1 (617) 555-0456",
+      landlordName: "Jane Smith",
+      landlordEmail: "jane.smith@email.com",
+      landlordPhone: "+1 (617) 555-0456",
       status: "available",
       university: "MIT",
       datePosted: "2024-01-20",
@@ -57,7 +60,8 @@ export default function HousingManagement() {
       title: "Luxury 2BR Near Stanford",
       type: "apartment",
       price: 3800,
-      location: "Palo Alto, CA",
+      city: "Palo Alto",
+      state: "CA",
       address: "789 Stanford Road, Palo Alto, CA 94305",
       bedrooms: 2,
       bathrooms: 2,
@@ -65,9 +69,9 @@ export default function HousingManagement() {
       description: "Luxury 2-bedroom apartment with modern amenities, perfect for students or young professionals.",
       amenities: ["WiFi", "Gym", "Pool", "Parking", "Balcony", "Dishwasher"],
       images: [],
-      landlord: "Mike Johnson",
-      contact: "mike.johnson@email.com",
-      phone: "+1 (650) 555-0789",
+      landlordName: "Mike Johnson",
+      landlordEmail: "mike.johnson@email.com",
+      landlordPhone: "+1 (650) 555-0789",
       status: "rented",
       university: "Stanford University",
       datePosted: "2024-01-10",
@@ -77,7 +81,7 @@ export default function HousingManagement() {
   const filteredHouses = houses.filter(
     (house) =>
       house.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      house.location.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      `${house.city}, ${house.state}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
       house.university.toLowerCase().includes(searchTerm.toLowerCase()) ||
       house.type.toLowerCase().includes(searchTerm.toLowerCase()),
   )
@@ -143,16 +147,14 @@ export default function HousingManagement() {
 
   if (showForm) {
     return (
-      <div className="max-w-5xl mx-auto my-auto px-4 sm:px-6 lg:px-8 py-16">
-        <HouseForm
-          house={editingHouse}
-          onSave={handleSaveHouse}
-          onCancel={() => {
-            setShowForm(false)
-            setEditingHouse(null)
-          }}
-        />
-      </div>
+      <HousingForm
+        housing={editingHouse}
+        onSave={handleSaveHouse}
+        onCancel={() => {
+          setShowForm(false)
+          setEditingHouse(null)
+        }}
+      />
     )
   }
 
@@ -204,7 +206,7 @@ export default function HousingManagement() {
                   <div className="flex items-center space-x-4 text-sm text-muted-foreground mb-3">
                     <span className="flex items-center">
                       <MapPin className="h-4 w-4 mr-1" />
-                      {house.location}
+                      {house.city}, {house.state}
                     </span>
                     <span className="flex items-center">
                       <DollarSign className="h-4 w-4 mr-1" />
@@ -224,7 +226,7 @@ export default function HousingManagement() {
 
                   <div className="text-sm text-muted-foreground mb-3">
                     <p className="font-medium">University: {house.university}</p>
-                    <p>Landlord: {house.landlord} • {house.contact}</p>
+                    <p>Landlord: {house.landlordName} • {house.landlordEmail}</p>
                     <p>Address: {house.address}</p>
                   </div>
 
@@ -276,221 +278,5 @@ export default function HousingManagement() {
         </div>
       )}
     </div>
-  )
-}
-
-// Simple House Form Component (you can expand this)
-function HouseForm({ house = null, onSave, onCancel }) {
-  const [formData, setFormData] = useState({
-    title: house?.title || "",
-    type: house?.type || "apartment",
-    price: house?.price || "",
-    location: house?.location || "",
-    address: house?.address || "",
-    bedrooms: house?.bedrooms || 1,
-    bathrooms: house?.bathrooms || 1,
-    sqft: house?.sqft || "",
-    description: house?.description || "",
-    university: house?.university || "",
-    landlord: house?.landlord || "",
-    contact: house?.contact || "",
-    phone: house?.phone || "",
-    amenities: house?.amenities || [],
-  })
-
-  const [newAmenity, setNewAmenity] = useState("")
-
-  const handleInputChange = (field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }))
-  }
-
-  const addAmenity = () => {
-    if (newAmenity.trim()) {
-      setFormData((prev) => ({
-        ...prev,
-        amenities: [...prev.amenities, newAmenity.trim()],
-      }))
-      setNewAmenity("")
-    }
-  }
-
-  const removeAmenity = (index) => {
-    setFormData((prev) => ({
-      ...prev,
-      amenities: prev.amenities.filter((_, i) => i !== index),
-    }))
-  }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    onSave(formData)
-  }
-
-  return (
-    <Card>
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold">
-            {house ? "Edit Housing Listing" : "Add New Housing Listing"}
-          </h2>
-          <Button variant="ghost" onClick={onCancel}>
-            ×
-          </Button>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">Title *</label>
-              <Input
-                value={formData.title}
-                onChange={(e) => handleInputChange("title", e.target.value)}
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Type *</label>
-              <select
-                value={formData.type}
-                onChange={(e) => handleInputChange("type", e.target.value)}
-                className="w-full px-3 py-2 border border-input rounded-md bg-background"
-              >
-                <option value="studio">Studio</option>
-                <option value="apartment">Apartment</option>
-                <option value="shared">Shared</option>
-                <option value="dorm">Dorm</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">Price per month *</label>
-              <Input
-                type="number"
-                value={formData.price}
-                onChange={(e) => handleInputChange("price", parseInt(e.target.value))}
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Bedrooms</label>
-              <Input
-                type="number"
-                value={formData.bedrooms}
-                onChange={(e) => handleInputChange("bedrooms", parseInt(e.target.value))}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Bathrooms</label>
-              <Input
-                type="number"
-                step="0.5"
-                value={formData.bathrooms}
-                onChange={(e) => handleInputChange("bathrooms", parseFloat(e.target.value))}
-              />
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">Location *</label>
-              <Input
-                value={formData.location}
-                onChange={(e) => handleInputChange("location", e.target.value)}
-                placeholder="City, State"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">University</label>
-              <Input
-                value={formData.university}
-                onChange={(e) => handleInputChange("university", e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-2">Full Address</label>
-            <Input
-              value={formData.address}
-              onChange={(e) => handleInputChange("address", e.target.value)}
-              placeholder="123 Main St, City, State, ZIP"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-2">Description</label>
-            <textarea
-              value={formData.description}
-              onChange={(e) => handleInputChange("description", e.target.value)}
-              className="w-full px-3 py-2 border border-input rounded-md bg-background"
-              rows={4}
-              placeholder="Describe the property..."
-            />
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">Landlord Name</label>
-              <Input
-                value={formData.landlord}
-                onChange={(e) => handleInputChange("landlord", e.target.value)}
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-2">Contact Email</label>
-              <Input
-                type="email"
-                value={formData.contact}
-                onChange={(e) => handleInputChange("contact", e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium mb-2">Amenities</label>
-            <div className="flex gap-2 mb-3">
-              <Input
-                value={newAmenity}
-                onChange={(e) => setNewAmenity(e.target.value)}
-                placeholder="Add amenity..."
-                onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addAmenity())}
-              />
-              <Button type="button" onClick={addAmenity} size="sm">
-                <Plus className="h-4 w-4" />
-              </Button>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {formData.amenities.map((amenity, index) => (
-                <Badge key={index} variant="secondary" className="flex items-center gap-1">
-                  {amenity}
-                  <button
-                    type="button"
-                    onClick={() => removeAmenity(index)}
-                    className="ml-1 text-xs"
-                  >
-                    ×
-                  </button>
-                </Badge>
-              ))}
-            </div>
-          </div>
-
-          <div className="flex justify-end space-x-4 pt-6 border-t">
-            <Button type="button" variant="outline" onClick={onCancel}>
-              Cancel
-            </Button>
-            <Button type="submit">
-              {house ? "Update Listing" : "Create Listing"}
-            </Button>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
   )
 }
